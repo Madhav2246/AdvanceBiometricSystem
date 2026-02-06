@@ -19,7 +19,7 @@ Professional, real‑time biometric platform with face recognition, emotion anal
 ## Screenshots
 Replace the image paths with your two screenshots (already in the project).
 
-![Dashboard](Screenshot 2026-02-06 002357.png)
+![Dashboard][(Screenshot 2026-02-06 002357.png](https://github.com/Madhav2246/AdvanceBiometricSystem/blob/main/Screenshot%202026-02-06%20002357.png))
 ![Enrollment](screenshots/ui-2.png)
 
 ---
