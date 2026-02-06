@@ -1,0 +1,236 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{{ title }}</title>
+    <link rel="stylesheet" href="/static/app.css" />
+  </head>
+  <body>
+    <div class="bg-grid"></div>
+    <header class="topbar">
+      <div class="brand">
+        <span class="dot"></span>
+        <div>
+          <div class="title">AdvanceFace Biometric</div>
+          <div class="subtitle">Secure Presence • Consent First • Live Insights</div>
+        </div>
+      </div>
+      <div class="status-pill" id="status-pill">Offline</div>
+    </header>
+
+    <main class="layout single">
+      <section class="video-card">
+        <div class="video-header">
+          <div class="video-title">Live Camera</div>
+          <div class="video-meta" id="fps-label">FPS: --</div>
+        </div>
+        <div class="video-frame">
+          <img id="video" src="/video" alt="Live stream" />
+          <div class="scanline"></div>
+        </div>
+        <div class="video-footer">
+          <div class="quick-help">Tip: Use the big toggles on the right</div>
+        </div>
+        <div class="legend-box">
+          <div class="legend-item">
+            <span class="legend-label">User</span>
+            <span class="legend-value" id="legend-user">--</span>
+          </div>
+          <div class="legend-item">
+            <span class="legend-label">Emotion</span>
+            <span class="legend-value" id="legend-emotion">--</span>
+          </div>
+          <div class="legend-item">
+            <span class="legend-label">Emotion Conf</span>
+            <span class="legend-value" id="legend-emotion-conf">--</span>
+          </div>
+          <div class="legend-item">
+            <span class="legend-label">Liveness</span>
+            <span class="legend-value" id="legend-liveness">--</span>
+          </div>
+          <div class="legend-item">
+            <span class="legend-label">Consent</span>
+            <span class="legend-value" id="legend-consent">Off</span>
+          </div>
+          <div class="legend-item">
+            <span class="legend-label">Blur</span>
+            <span class="legend-value" id="legend-blur">On</span>
+          </div>
+          <div class="legend-item">
+            <span class="legend-label">Enroll</span>
+            <span class="legend-value" id="legend-enroll">Idle</span>
+          </div>
+        </div>
+      </section>
+
+      <aside class="side-panel">
+        <div class="panel controls-panel">
+          <div class="panel-title">Quick Controls</div>
+          <div class="panel-body controls-grid">
+            <button class="toggle-card" id="toggle-consent">
+              <div class="toggle-title">
+                <span class="btn-index">1</span> Consent
+              </div>
+              <div class="toggle-state" id="consent-state">Off</div>
+            </button>
+            <button class="toggle-card" id="toggle-blur">
+              <div class="toggle-title">
+                <span class="btn-index">2</span> Blur Unknown
+              </div>
+              <div class="toggle-state" id="blur-state">On</div>
+            </button>
+            <div class="camera-card">
+              <div class="toggle-title">
+                <span class="btn-index">3</span> Camera
+              </div>
+              <div class="camera-row">
+                <select id="camera-index">
+                  <option value="0">Camera 0</option>
+                  <option value="1">Camera 1</option>
+                  <option value="2">Camera 2</option>
+                  <option value="3">Camera 3</option>
+                </select>
+                <button class="btn ghost" id="apply-camera">Apply</button>
+              </div>
+              <div class="camera-hint">Try 1 for USB camera.</div>
+            </div>
+            <button class="toggle-card" id="export-audit">
+              <div class="toggle-title">
+                <span class="btn-index">4</span> Export Audit Log
+              </div>
+              <div class="toggle-state">Download</div>
+            </button>
+          </div>
+        </div>
+
+        <div class="panel">
+          <div class="panel-title">Enrollment</div>
+          <div class="panel-body">
+            <p class="hint">Enroll a person only with clear consent. Face should be centered and well-lit.</p>
+            <div class="unknown-queue">
+              <div class="queue-title">Unknown Queue (auto after 5s)</div>
+              <ul class="face-list" id="unknown-list"></ul>
+              <div class="empty" id="unknown-empty">No unknown faces queued.</div>
+            </div>
+            <div class="form-row">
+              <input type="text" id="enroll-name" placeholder="Enter name" />
+              <button class="btn primary" id="enroll-btn">
+                <span class="btn-index dark">5</span> Enroll
+              </button>
+            </div>
+            <div class="enroll-status" id="enroll-status">Idle</div>
+          </div>
+        </div>
+
+        <div class="panel">
+          <div class="panel-title">Live Faces</div>
+          <div class="panel-body">
+            <ul class="face-list" id="face-list"></ul>
+            <div class="empty" id="face-empty">No faces detected yet.</div>
+          </div>
+        </div>
+
+        <div class="panel">
+          <div class="panel-title">Enrolled Faces</div>
+          <div class="panel-body">
+            <div class="form-row">
+              <input type="text" id="enroll-search" placeholder="Search name" />
+              <button class="btn ghost" id="refresh-enrollments">Refresh</button>
+            </div>
+            <ul class="face-list" id="enroll-list"></ul>
+            <div class="empty" id="enroll-empty">No enrolled faces yet.</div>
+          </div>
+        </div>
+
+      </aside>
+    </main>
+
+    <section class="below-panels">
+      <div class="panel">
+        <div class="panel-title">System State</div>
+        <div class="panel-body">
+          <div class="metric">
+            <span>Consent</span>
+            <strong id="consent-val">Off</strong>
+          </div>
+          <div class="metric">
+            <span>Blur Unknown</span>
+            <strong id="blur-val">On</strong>
+          </div>
+          <div class="metric">
+            <span>Faces</span>
+            <strong id="face-count">0</strong>
+          </div>
+          <div class="metric">
+            <span>FPS</span>
+            <strong id="fps-val">--</strong>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel">
+        <div class="panel-title">Recognition Rate</div>
+        <div class="panel-body">
+          <canvas id="rate-chart" width="320" height="140"></canvas>
+          <div class="chart-label">Last 2 minutes (10s buckets)</div>
+        </div>
+      </div>
+
+      <div class="panel">
+        <div class="panel-title">Scan Timeline</div>
+        <div class="panel-body">
+          <canvas id="timeline-chart" width="320" height="120"></canvas>
+          <div class="chart-label">Faces detected (last 60s)</div>
+        </div>
+      </div>
+
+      <div class="panel">
+        <div class="panel-title">Good Vibe Quote</div>
+        <div class="panel-body">
+          <div class="quote-emotion" id="quote-emotion">Emotion: --</div>
+          <div class="quote-text" id="quote-text">Waiting for emotion...</div>
+        </div>
+      </div>
+
+      <div class="panel">
+        <div class="panel-title">Calibration Wizard</div>
+        <div class="panel-body">
+          <div class="metric">
+            <span>Lighting</span>
+            <strong id="lighting-val">--</strong>
+          </div>
+          <div class="metric">
+            <span>Distance</span>
+            <strong id="distance-val">--</strong>
+          </div>
+          <div class="metric">
+            <span>Brightness</span>
+            <strong id="brightness-val">--</strong>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel">
+        <div class="panel-title">Model Status</div>
+        <div class="panel-body">
+          <div class="metric">
+            <span>Dlib Shape</span>
+            <strong id="model-shape">--</strong>
+          </div>
+          <div class="metric">
+            <span>Dlib Rec</span>
+            <strong id="model-rec">--</strong>
+          </div>
+          <div class="metric">
+            <span>Emotion</span>
+            <strong id="model-emotion">--</strong>
+          </div>
+        </div>
+      </div>
+    </section>
+    </main>
+
+    <script src="/static/app.js"></script>
+  </body>
+</html>
