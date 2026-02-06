@@ -1,6 +1,13 @@
 # Advance Face Biometric System
 
-Professional, real‑time biometric platform with face recognition, emotion analysis, liveness checks, audit logging, and a modern web dashboard.
+<p align="center">
+  <img src="https://img.shields.io/badge/Biometric-Platform-00c2ff?style=for-the-badge" />
+  <img src="https://img.shields.io/badge/Face-Recognition-6c5ce7?style=for-the-badge" />
+  <img src="https://img.shields.io/badge/Emotion-AI-00d084?style=for-the-badge" />
+  <img src="https://img.shields.io/badge/Consent-First-ff6b6b?style=for-the-badge" />
+</p>
+
+**Professional real‑time biometric system** with face recognition, emotion analysis, liveness checks, audit logging, and a modern web dashboard.
 
 ---
 
@@ -19,8 +26,8 @@ Professional, real‑time biometric platform with face recognition, emotion anal
 ## Screenshots
 Replace the image paths with your two screenshots (already in the project).
 
-![Dashboard]((https://github.com/Madhav2246/AdvanceBiometricSystem/blob/main/Screenshot%202026-02-06%20002357.png))
-![Enrollment]([screenshots/ui-2.png](https://github.com/Madhav2246/AdvanceBiometricSystem/blob/main/Screenshot%202026-02-06%20002640.png))
+![Dashboard](screenshots/ui-1.png)
+![Enrollment](screenshots/ui-2.png)
 
 ---
 
@@ -70,35 +77,24 @@ AdvanceFaceBiometricSystem/
 
 ---
 
-## Installation
-### 1. Create and activate venv
+## ⚙️ Setup
+### 1) Create and activate virtual environment
 ```bash
 python -m venv venv
 venv\Scripts\activate
 ```
 
-### 2. Install dependencies
+### 2) Install dependencies
 ```bash
 pip install -r requirements.txt
 ```
 
-> On Windows, `dlib` requires CMake and Visual C++ Build Tools.
+> On Windows, `dlib` requires **CMake** and **Visual C++ Build Tools**.
 
 ---
 
-## Models (Required Files)
-Make sure these files exist in the **root directory**:
-- `emotion_model.h5`
-- `haarcascade_frontalface_default.xml`
-- `shape_predictor_68_face_landmarks.dat`
-- `dlib_face_recognition_resnet_model_v1.dat`
-
-If any are missing, recognition or emotion analysis will be disabled.
-
----
-
-## Gemini Quotes Setup
-Set your API key in the same terminal session before running:
+## 🔑 Gemini Quotes (Optional)
+Set API key in the same terminal before running:
 
 **PowerShell**
 ```bash
@@ -112,7 +108,7 @@ set GEMINI_API_KEY=YOUR_KEY
 
 ---
 
-## Run (Web Dashboard)
+## ▶️ Run the Web Dashboard
 ```bash
 python web_app.py
 ```
@@ -123,7 +119,7 @@ http://127.0.0.1:5000
 
 ---
 
-## Enrollment Workflow
+## ✅ Enrollment Workflow
 1. Turn **Consent ON**
 2. Unknown faces appear in the **Unknown Queue** after 5 seconds
 3. Click **Use** to prefill the name
@@ -131,44 +127,62 @@ http://127.0.0.1:5000
 
 ---
 
-## USB Camera
+## 📷 USB Camera
 Use the **Camera selector** in the UI.  
 Try **Camera 1** for most USB webcams.
 
 ---
 
-## Audit Log
-All recognition events are logged in:
+## 🗂️ Audit Logs
+All recognition events are written to:
 ```
 events.jsonl
 ```
-Use the **Export Audit Log** button in the UI to download the file.
+Use the **Export Audit Log** button to download the file.
 
 ---
 
-## Troubleshooting
-**Emotion always Unknown**
+## 🧪 Troubleshooting
+**Emotion always `Unknown`**
 - Ensure `emotion_model.h5` is present
-- Turn **Consent ON**
-- Check **Model Status** panel
+- Consent must be **ON**
+- Check the **Model Status** panel
 
-**Dlib errors**
+**Dlib install errors**
 - Confirm CMake is in PATH
 - Install Visual C++ Build Tools
 
-**Camera fails or freezes**
+**Camera fails**
 - Switch camera index in the UI
-- Replug the USB camera
+- Replug USB camera
 
 ---
 
-## Dataset (FER2013)
-Use the FER2013 dataset to retrain the emotion model:
+## 📁 Project Structure
 ```
-https://www.kaggle.com/datasets/msambare/fer2013
+AdvanceFaceBiometricSystem/
+├── web_app.py
+├── main.py
+├── face_detector.py
+├── face_recognizer.py
+├── emotion_analyzer.py
+├── utils.py
+├── templates/
+│   └── index.html
+├── static/
+│   ├── app.css
+│   └── app.js
+├── requirements.txt
+└── Readme.md
 ```
 
 ---
 
-## License
-MIT License
+## 📌 Dataset
+FER2013 (for training `emotion_model.h5`):  
+`https://www.kaggle.com/datasets/msambare/fer2013`
+
+---
+
+## 📜 License
+MIT
